@@ -1,5 +1,5 @@
 <template lang="pug">
-div(@mousedown="onBtnClick")
+div(@mousedown="onBtnClick" @keydown="onKey")
 	a(:class="'vw-btn-'+module.title", v-html="module.icon")
 
 	.dashboard(
@@ -12,6 +12,8 @@ div(@mousedown="onBtnClick")
       ref="moduleDashboard",
       :is="module",
       @exec="exec",
+			@savesel="savesel",
+			@restoresel="restoresel",
       :uid="uid"
       :options="options"
     )
@@ -46,10 +48,31 @@ export default {
 
     exec () {
       this.$parent.exec.apply(null, arguments)
-    },
+		},
+
+		savesel () {
+      this.$parent.saveSelection()
+		},
+
+		restoresel () {
+      this.$parent.restoreSelection()
+		},
+
+		onKey ($event) {
+			console.log($event);
+		},
 
 		onBtnClick ($event) {
+
+			if($event.target.localName == 'input'){
+				console.log($event);
+				return;
+			}
 			$event.preventDefault();
+
+
+
+
 			if (this.module.action !== undefined)
 				this.exec.apply(null, this.module.action);
 

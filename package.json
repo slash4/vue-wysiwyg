@@ -21,7 +21,7 @@
     "build:prod": "rm -rf dist/* && BABEL_ENV=production BUILD=prod node build/build.js"
   },
   "dependencies": {
-    "@caohenghu/vue-colorpicker": "^1.1.1",
+    "@caohenghu/vue-colorpicker": "github:slash4/vue-colorpicker",
     "debounce": "^1.1.0",
     "vue": "^2.5.13",
     "vue2-dropzone": "^3.0.4"

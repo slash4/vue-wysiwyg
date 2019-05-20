@@ -1,5 +1,5 @@
 <template lang="pug">
-.editr
+.editr(@click="editorClick")
     .editr--toolbar
         Btn(
             v-for="(module,i) in modules",
@@ -12,6 +12,7 @@
         )
 
     .editr--content(ref="content", contenteditable="true", tabindex="1", :placeholder="placeholder")
+
 
 </template>
 
@@ -75,7 +76,8 @@ export default {
 
     data () {
         return {
-            selection: ""
+            selection: "",
+            range: null
         }
     },
 
@@ -125,10 +127,12 @@ export default {
             if (window.getSelection !== undefined) {
                 this.selection = window.getSelection();
                 if (this.selection.getRangeAt && this.selection.rangeCount) {
-                    return this.selection.getRangeAt(0);
+                    this.range =  this.selection.getRangeAt(0);
+                    return this.range;
                 }
             } else if (document.selection && document.selection.createRange) {
-                return document.selection.createRange();
+                this.range = document.selection.createRange();
+                return this.range;
             }
             return null;
         },
@@ -143,9 +147,15 @@ export default {
                 else if (document.selection && range.select)
                     range.select();
             }
+            else{
+
+            }
+            this.selection = null;
+            this.range = null;
         },
         clearSelection() {
           this.selection = null;
+          this.range = null;
           const selection = window.getSelection();
 
           if (selection) {
@@ -158,19 +168,28 @@ export default {
           }
         },
         exec (cmd, arg, sel){
-            sel !== false && this.selection && this.restoreSelection(this.selection);
+            sel !== false && this.selection && this.restoreSelection(this.range);
             document.execCommand(cmd, false, arg||"");
-            this.clearSelection();
+            //this.clearSelection();
 
             this.$nextTick(this.emit);
         },
 
         onDocumentClick (e) {
+
             for (let i = 0; i < this.btnsWithDashboards.length; i++) {
                 const btn = this.$refs[`btn-${this.btnsWithDashboards[i].title}`][0];
                 if (btn && btn.showDashboard && !btn.$el.contains(e.target))
                     btn.closeDashboard();
             }
+        },
+
+        editorClick($event){
+            if($event.target.localName == 'input'){
+
+				return;
+			}
+            if(this.range){this.restoreSelection(this.range)}
         },
 
         emit () {

@@ -3,7 +3,7 @@
         <color-picker
             theme="light"
             :color="color"
-            :sucker-hide="true"
+            :sucker-hide="false"
             @changeColor="changeColor"
         />
     </div>
@@ -30,12 +30,17 @@
 
         methods: {
             changeColor(color) {
+
                 console.log(color)
+                if(color.hex.length<7){return}
 
                 this.color = color.rgba.toRgbaString();
                 console.log(this.color);
+
                 //this.$emit("exec", "styleWithCSS", true);
+                //this.$emit("savesel");
                 this.$emit("exec", 'foreColor', this.color);
+                //this.$emit("restoresel");
             },
 
         }
