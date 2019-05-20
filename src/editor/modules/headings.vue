@@ -6,6 +6,7 @@
         <button type="button" @click="insertHeading">H4</button>
         <button type="button" @click="insertHeading">H5</button>
         <button type="button" @click="insertHeading">H6</button>
+        <button type="button" @click="insertHeading">div</button>
     </div>
 </template>
 

@@ -32,6 +32,7 @@ import alignRight from "./modules/alignRight.js"
 
 import headings from "./modules/headings.vue";
 import colorPicker from "./modules/colorPicker.vue";
+import fontSize from "./modules/fontSize.vue";
 import hyperlink from "./modules/hyperlink.vue";
 import code from "./modules/code.js";
 import list_ordered from "./modules/list_ordered.js";
@@ -45,7 +46,7 @@ import removeFormat from "./modules/removeFormat.js";
 import separator from "./modules/separator.js";
 
 const modules = [
-    bold, italic, underline, colorPicker, separator,
+    bold, italic, underline, colorPicker, fontSize, separator,
     alignLeft, alignCenter, alignRight, separator,
     headings, hyperlink, code,
     list_ordered, list_unordered, separator,
